@@ -33,14 +33,21 @@ clean_df = df_acc[['Latitude', 'Longitude']]
 clean_df = clean_df.dropna(axis=0, subset=['Latitude','Longitude'])
 clean_data = [[row['Latitude'],row['Longitude']] for index, row in clean_df.iterrows()]
 
-if ret == 'heatmap':
-    HeatMap(clean_data).add_to(map)
+# if ret == 'heatmap':
+#     HeatMap(clean_data).add_to(map)
 
-elif ret == 'scatter':
-    data.apply(plot_dot, axis=1)
-    # m.fit_bounds(m.get_bounds())
+# elif ret == 'scatter':
+#     data.apply(plot_dot, axis=1)
+    
 
-elif ret == "Reactive":
-    MarkerCluster(clean_data).add_to(map)
+# elif ret == "Reactive":
+#     MarkerCluster(clean_data).add_to(map)
+
+
+# Test code.
+HeatMap(clean_data).add_to(map)
+data.apply(plot_dot, axis=1)
+MarkerCluster(clean_data).add_to(map)
+folium.LayerControl().add_to(map)
 
 st_data = st_folium(map, height=400, width=1920)
