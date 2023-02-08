@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LeafletJS with Search Box</title>
+
+   <!-- CSS and JS files for Search Box -->
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+
+</head>
+<body>
+
+        <div id="map"></div>
+
+    <script type="text/javascript">
+
+        // This setup the leafmap object by linking the map() method to the map id (in <div> html element)
+        var map = L.map('map', {
+              center: [51.517327, -0.120005],
+              zoom: 1.5,
+              // minZoom: 1.5,
+             //  maxZoom: 1.5
+            });
+
+        // Start adding controls as follow... L.controlName().addTo(map);
+
+        // Control 1: This add the OpenStreetMap background tile
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+
+        // Control 2: This add a scale to the map
+            L.control.scale().addTo(map);
+
+        // Control 3: This add a Search bar
+            var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+            var results = new L.LayerGroup().addTo(map);
+
+              searchControl.on('results', function(data){
+                results.clearLayers();
+                for (var i = data.results.length - 1; i >= 0; i--) {
+                  results.addLayer(L.marker(data.results[i].latlng));
+                }
+              });
+
+    </script>
+
+</body>
+</html>

@@ -1,10 +1,26 @@
 import folium
 import pandas as pd
 import streamlit as st
-from folium.plugins import HeatMap, MarkerCluster
+from folium.plugins import HeatMap, MarkerCluster, Search
 from streamlit_folium import st_folium
 
-map = folium.Map(location=[51.521709, -0.212653], zoom_start=13)
+st.title('Mapping Potholes')
+
+ret = st.selectbox("Map Type", ('scatter', 'heatmap', 'clusters'), index=0)
+
+sel_opt= st.sidebar.selectbox('Map Style', ('Street View', 'Satellite', 'Water Color', 'High Contrast Toner'))
+
+if sel_opt == 'Street View':
+    selected_tiles = 'OpenStreetMap'
+elif sel_opt == 'Satellite':
+    selected_tiles = 'stamen terrain'
+elif sel_opt == 'Water Color':
+    selected_tiles = 'stamen water color'
+elif sel_opt == 'High Contrast Toner':
+    selected_tiles = 'stamen toner'
+
+
+map = folium.Map(location=[51.5075932,-0.1455952], zoom_start=14, tiles=selected_tiles)
 
 
 def plot_dot(point):
@@ -14,11 +30,6 @@ def plot_dot(point):
                         color='red',
                         fill= True,
                         fill_color='red').add_to(map)
-
-
-st.title('Mapping Potholes')
-
-ret = st.selectbox("Map Type", ('scatter', 'heatmap', 'satellite', 'test'), index=0)
 
 # Read potholes data from csv.
 df_acc = pd.read_csv('test-cv.csv', dtype=object)
@@ -32,21 +43,13 @@ clean_df = df_acc[['Latitude', 'Longitude']]
 clean_df = clean_df.dropna(axis=0, subset=['Latitude','Longitude'])
 clean_data = [[row['Latitude'],row['Longitude']] for index, row in clean_df.iterrows()]
 
-# if ret == 'heatmap':
-#     HeatMap(clean_data).add_to(map)
+if ret == 'heatmap':
+    HeatMap(clean_data).add_to(map)
 
-# elif ret == 'scatter':
-#     data.apply(plot_dot, axis=1)
+elif ret == 'scatter':
+    data.apply(plot_dot, axis=1)
     
-
-# elif ret == "Reactive":
-#     MarkerCluster(clean_data).add_to(map)
-
-
-# Test code.
-HeatMap(clean_data).add_to(map)
-data.apply(plot_dot, axis=1)
-MarkerCluster(clean_data).add_to(map)
-folium.LayerControl().add_to(map)
+elif ret == "clusters":
+    MarkerCluster(clean_data).add_to(map)
 
 st_data = st_folium(map, height=400, width=1920)

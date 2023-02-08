@@ -23,4 +23,4 @@ folium.raster_layers.WmsTileLayer(url ='https://maps3.sgu.se/geoserver/jord/ows?
 
 folium.LayerControl().add_to(map_geo)
 
-st_data = st_folium(map_geo, width=2000)
+st_folium(map_geo, height=400, width=2000)
