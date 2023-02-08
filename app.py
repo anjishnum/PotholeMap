@@ -19,7 +19,6 @@ def plot_dot(point):
 st.title('Mapping Potholes')
 
 ret = st.selectbox("Map Type", ('scatter', 'heatmap', 'satellite', 'test'), index=0)
-print(ret)
 
 # Read potholes data from csv.
 df_acc = pd.read_csv('test-cv.csv', dtype=object)
