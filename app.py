@@ -24,13 +24,13 @@ data = pd.DataFrame(df_acc, columns=['Latitude', 'Longitude'])
 df_acc['Latitude'] = df_acc['Latitude'].astype(float)
 df_acc['Longitude'] = df_acc['Longitude'].astype(float)
 
-clean_df = df_acc[['Latitude', 'Longitude', 'Diameter', 'Date']]
+clean_df = df_acc[['Location_Index', 'Latitude', 'Longitude', 'Diameter', 'Date']]
 
 # Clean NAN values.
 clean_df = clean_df.dropna(axis=0, subset=['Latitude','Longitude', 'Diameter', 'Date'])
 
 # Get locations as a list of lists.
-clean_data = [[row['Latitude'], row['Longitude'], row['Diameter'], row['Date']] for index, row in clean_df.iterrows()]
+clean_data = [[row['Location_Index'], row['Latitude'], row['Longitude'], row['Diameter'], row['Date']] for index, row in clean_df.iterrows()]
 
 # Get clean location.
 clean_data_loc = [[row['Latitude'], row['Longitude']] for index, row in clean_df.iterrows()]
@@ -79,7 +79,9 @@ elif ret == 'scatter':
     
 elif ret == "clusters":
     for point in clean_data:
-        lat, lon, dia, date = point
+        index, lat, lon, dia, date = point
+        # print(type(index))
+        # print(index)
         folium.Marker(location=[lat, lon],
                     popup=f"Pothole \n Diameter: {dia} ft, \n Date: {date} , \n Location: {lat}, {lon}").add_to(marker_cluster)
     
