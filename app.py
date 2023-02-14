@@ -42,7 +42,7 @@ st.title('Mapping Potholes')
 ret = st.selectbox("Map Type", ('scatter', 'heatmap', 'clusters'), index=0)
 
 # Define selectbox on the sidebar for choosing map types.
-sel_opt= st.sidebar.selectbox('Map Style', ('Street View', 'Satellite', 'Water Color', 'High Contrast Toner'))
+sel_opt= st.selectbox('Map Style', ('Street View', 'Satellite', 'Water Color', 'High Contrast Toner'))
 
 # Types of views.
 if sel_opt == 'Street View':
