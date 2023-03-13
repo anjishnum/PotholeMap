@@ -19,7 +19,7 @@ def plot_marker(map_obj, img_path, location=[13.014138, 77.632786]):
         
 
 # Streamlit app initialize.
-st.title('Mapping Potholes')
+st.title('Indian Cities Mapping')
 # Define folium map plugin with location and zoom value.
 map = folium.Map(location=[13.014138, 77.632786], zoom_start=13)
 
